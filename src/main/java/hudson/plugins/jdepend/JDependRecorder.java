@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import jdepend.xmlui.JDepend;
 
@@ -68,7 +69,7 @@ public class JDependRecorder extends Recorder
     		}
     		else {
     			// Path isn't absolute, so relative to workspace
-    			File tempJDependFile = File.createTempFile("jdepend", ".xml");
+    			File tempJDependFile = Files.createTempFile("jdepend", ".xml").toFile();
     			build.getWorkspace().withSuffix("/" + configuredPath).copyTo(new FileOutputStream(tempJDependFile));
     			p = getJDependParser(tempJDependFile);
     	        if (!tempJDependFile.delete()) {
@@ -168,7 +169,7 @@ public class JDependRecorder extends Recorder
         		copiedWorkspace = true;
         	}
         	
-        	jDependFile = File.createTempFile("jdepend", ".xml");
+        	jDependFile = Files.createTempFile("jdepend", ".xml").toFile();
         }
         catch (Exception e) {
         	log("Unable to ready files: " + e);
